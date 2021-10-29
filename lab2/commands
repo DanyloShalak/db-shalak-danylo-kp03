@@ -1,0 +1,19 @@
+insertPost content author_id tag:tagName#tag1
+insertComment content post_id author_id  
+insertUser login fullname
+
+deletePost id
+deleteComment id
+deleteUser id
+
+updatePost content id
+updateComment content id
+updateUser fullname id
+
+generateComment number
+generateUser number 
+generatePost number
+
+analytics asc/desc asc/desc limitNum
+userPost user_id asc/desc asc/desc limitNum
+activity asc/desc asc/desc date limitNum
