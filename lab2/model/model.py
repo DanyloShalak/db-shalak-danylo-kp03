@@ -1,0 +1,3 @@
+from model.commentRepository import CommentsRepository
+from model.usersRepository import UsersRepository
+from model.postsRepository import PostsRepository

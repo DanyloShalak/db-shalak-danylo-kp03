@@ -1,8 +1,9 @@
 import psycopg2
 from controller.controller import Controller
-from model.postsRepository import PostsRepository 
-from model.commentRepository import CommentsRepository 
-from model.usersRepository import UsersRepository 
+# from model.postsRepository import PostsRepository 
+# from model.commentRepository import CommentsRepository 
+# from model.usersRepository import UsersRepository 
+from model.model import UsersRepository, PostsRepository, CommentsRepository
 from view import View
 
 
