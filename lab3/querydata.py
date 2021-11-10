@@ -2,7 +2,7 @@ from datetime import date
 import datetime
 
 def get_query_data(command):
-    if command.startswith('delete') or command.startswith('generate'):
+    if command.startswith('delete') or command.startswith('generate') or command.startswith('userData'):
         return get_id_paramData(command)
     if command.startswith('update'):
         return get_update_data(command)
@@ -22,13 +22,20 @@ def get_query_data(command):
         return get_findUser_data(command)
     if command.startswith('periodUser'):
         return get_period_data(command)
+    if command.startswith('commentsUser'):
+        return get_comments_user_data(command)
     
+def get_comments_user_data(command):
+    data = command.split(' ')
+    if len(data) != 2:
+        raise Exception("Incorrect entered command '{0}'".format(data[0]))
+    return (data[1], )
 
 def get_period_data(command):
     data = command.split(' ')
     if len(data) != 3:
         raise Exception("Incorrect entered command '{0}'".format(data[0]))
-    return (data[1], data[2], )
+    return (data[1].replace('/', ' '), data[2].replace('/', ' '), )
 
 def get_findUser_data(command):
     data = command.split(' ')

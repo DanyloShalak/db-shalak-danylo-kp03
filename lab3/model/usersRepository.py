@@ -98,7 +98,7 @@ class UsersRepository:
         return data
 
     def search_user_by_login(self, searchData):
-        query = """select * from users where login = %s"""
+        query = """select * from users where fullname = %s"""
         cursor = self.connection.cursor()
         cursor.execute(query, searchData)
         search_result = cursor.fetchall()
@@ -107,11 +107,28 @@ class UsersRepository:
 
     
     def search_users_regist_in_period(self, searchData):
-        query = """select * from users where
-                 registration_date > %s and registration_date < %s"""
+        query = """select * from users where registration_date between %s and %s"""
         cursor = self.connection.cursor()
         cursor.execute(query, searchData)
         search_result = cursor.fetchall()
         cursor.close()
         return search_result
+
+    
+    def get_user_post_comment_count(self, data):
+        query = """with comm (comments_count) as 
+                (
+                    select count(*) from comments where author_id = %s
+                ),
+                post (posts_count) as 
+                (
+                    select count (*) from posts where author_id = %s
+                )
+                select * from comm, post
+                """
+        cursor = self.connection.cursor()
+        cursor.execute(query, (data[0], data[0]))
+        result = cursor.fetchall()
+        cursor.close
+        return result
         

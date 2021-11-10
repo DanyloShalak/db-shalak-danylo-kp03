@@ -1,9 +1,0 @@
-create table users
-(
-	user_id serial primary key ,
-	login character varying(30) not null,
-	fullname character varying(50) not null,
-	registration_date timestamp not null
-)
-
-

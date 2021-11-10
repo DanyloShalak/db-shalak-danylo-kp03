@@ -21,7 +21,7 @@ class PostsRepository:
 
     
     def deletePost(self, postData):
-        self.session.delete(self.session.query(Post.get(postData[0])))
+        self.session.delete(self.session.query(Post).get(postData[0]))
         self.session.commit()
 
 
@@ -51,8 +51,7 @@ class PostsRepository:
             select  
                 chr(trunc(65+random()*25)::int) || 
                 chr(trunc(65+random()*25)::int) as fullname,
-                (timestamp '2000-01-01' + random() *
-                 (timestamp '2021-10-10' - timestamp '2000-01-01'))::date 
+                CURRENT_TIMESTAMP + ( seq || 'minute' ) :: interval 
                 from generate_series(1, %s) seq
         )
 

@@ -25,6 +25,8 @@ class Controller:
         self.controller_dict["userPost"] = self.postsRepository.get_users_posts
         self.controller_dict["findUser"] = self.usersRepository.search_user_by_login
         self.controller_dict["periodUser"] = self.usersRepository.search_users_regist_in_period
+        self.controller_dict["commentsUser"] = self.commentsRepository.commentsUser
+        self.controller_dict["userData"] = self.usersRepository.get_user_post_comment_count
         
 
 
@@ -32,20 +34,25 @@ class Controller:
         commands = ["insertPost", "insertComment", "insertUser",
          "deletePost", "deleteComment", "deleteUser", "updatePost",
          "updateUser", "updateComment", "generateComment", "generatePost",
-         "generateUser", "analytics", "activity", "userPost", "findUser", "periodUser"]
+         "generateUser", "analytics", "activity", "userPost", "findUser", "periodUser",
+         "commentsUser", "userData"]
         commandName = command.split(' ')[0]
 
         titles = {"analytics" : ["user_id", "login", "posst_count", "comment_count"],
         "activity" : ["user_id", "login", "registration_date", "points"],
         "userPost" : ["post_id", "post_content", "publish_date", "comment_count"],
         "findUser" : ["user_id", "login",  "fullname", "registration_date"],
-        "periodUser" : ["user_id", "login",  "fullname", "registration_date"]}
+        "periodUser" : ["user_id", "login",  "fullname", "registration_date"],
+        "commentsUser" : ["commet_id", "comment_content", "post_id", "author_id", "pub_date"],
+        "userData" : ["comments_count", "posts_count"]}
+        
 
         if commandName not in commands:
             raise Exception("Command '{0}' do not exists".format(commandName))
 
         commandData = querydata.get_query_data(command)
-        if commandName in ["analytics", "activity", "userPost", "findUser", "periodUser"]:
+        if commandName in ["analytics", "activity", "userPost",
+                             "findUser", "periodUser", "commentsUser", "userData"]:
             start = time.time()
             fetched_data = self.controller_dict[commandName](commandData)
             self.view.fetch_data_log(titles[commandName], fetched_data)

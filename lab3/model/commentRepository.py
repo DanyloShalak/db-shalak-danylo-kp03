@@ -39,8 +39,7 @@ class CommentsRepository:
             select  
                 chr(trunc(65+random()*25)::int) || 
                 chr(trunc(65+random()*25)::int) as fullname,
-                (timestamp '2000-01-01' + random() * 
-            (timestamp '2021-10-10' - timestamp '2000-01-01'))::date 
+                CURRENT_TIMESTAMP + ( seq || 'minute' ) :: interval
                 from generate_series(1, %s) seq
         )
 
@@ -53,3 +52,12 @@ class CommentsRepository:
 
         cursor.close()
         self.connection.commit()
+    
+
+    def commentsUser(self, data):
+        query = """select * from comments where author_id = %s limit 10"""
+        cursor = self.connection.cursor()
+        cursor.execute(query, data)
+        result = cursor.fetchall()
+        cursor.close()
+        return result

@@ -7,7 +7,7 @@ from view import View
 
 conn = psycopg2.connect(
     host="localhost",
-    database="labs",
+    database="db_labs",
     user="postgres",
     password="danylo1")
 
@@ -30,8 +30,8 @@ while(True):
         break
 
     
-    try:
-        contr.handleCommand(command)
-    except Exception as e:
-        print(e)
+    # try:
+    contr.handleCommand(command)
+    # except Exception as e:
+    #     print(e)
 	
